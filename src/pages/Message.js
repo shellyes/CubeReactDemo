@@ -15,7 +15,7 @@ import * as CubeFile from "cube/CubeFile";
 import * as CubeMessage from "cube/CubeMessage";
 
 import { CubeFileStatusListener } from "../listener/CubeFileStatusListener";
-let appInfo = require(`${__dirname}/../../appInfo`);
+let appInfo = require(`${__dirname}/../appInfo`);
 
 var CubeFileInfo = CubeFile.Info;
 var CubeImageMessage = CubeMessage.Entity.Image;

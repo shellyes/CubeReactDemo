@@ -8,7 +8,7 @@ import * as CubeSignaling from "cube/CubeSignaling";
 import { AppAccountListener } from "../listener/AppAccountListener";
 import { AppCallListener } from "../listener/AppCallListener";
 import { MediaProbe } from "../listener/MediaProbe";
-let appInfo = require(`${__dirname}/../../appInfo`);
+let appInfo = require(`${__dirname}/../appInfo`);
 const MyIcon = Icon.createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_1386319_6vfypzbgm6s.js', // 在 iconfont.cn 上生成
 });

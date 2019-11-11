@@ -6,8 +6,8 @@ import {connect} from 'react-redux';
 import api from '../api/index';
 import  '../assets/css/mian.css';
 
-import imgUrl from '../assets/img/logo120.png'
-let appInfo = require(`${__dirname}/../../appInfo`);
+import imgUrl from '../assets/img/logo120.png';
+let appInfo = require(`${__dirname}/../appInfo`);
 
 class UserList extends Component {
     constructor(props) {

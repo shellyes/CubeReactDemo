@@ -9,7 +9,7 @@ import { AppAccountListener } from "../listener/AppAccountListener";
 import { AppFileManagerListener } from "../listener/AppFileManagerListener";
 import * as CubeFile from "cube/CubeFile";
 import { CubeFileStatusListener } from "../listener/CubeFileStatusListener";
-let appInfo = require(`${__dirname}/../../appInfo`);
+let appInfo = require(`${__dirname}/../appInfo`);
 
 var CubeFileInfo = CubeFile.Info;
 window.CubeCore = CubeCore;

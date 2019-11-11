@@ -7,7 +7,7 @@ import '../assets/css/mian.css';
 import * as CubeWhiteboard from "cube/CubeWhiteboard";
 import { AppAccountListener } from "../listener/AppAccountListener";
 import { AppWhiteboardListener } from "../listener/AppWhiteboardListener";
-let appInfo = require(`${__dirname}/../../appInfo`);
+let appInfo = require(`${__dirname}/../appInfo`);
 const { Option } = Select;
 
 class Whiteboard extends Component {

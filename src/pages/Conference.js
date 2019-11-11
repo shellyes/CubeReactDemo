@@ -12,7 +12,7 @@ import { AppConferenceListener } from "../listener/AppConferenceListener";
 import { AppGroupListener } from "../listener/AppGroupListener";
 // import UserLogin from "../common/UserLogin";
 import * as CubeCore from "cube/CubeCore";
-let appInfo = require(`${__dirname}/../../appInfo`);
+let appInfo = require(`${__dirname}/../appInfo`);
 window.CubeCore = CubeCore;
 const { Option } = Select;
 class Conference extends Component {

@@ -6,7 +6,7 @@ import '../assets/css/mian.css';
 
 import { AppGroupListener } from "../listener/AppGroupListener";
 import { AppAccountListener } from "../listener/AppAccountListener";
-let appInfo = require(`${__dirname}/../../appInfo`);
+let appInfo = require(`${__dirname}/../appInfo`);
 const { Option } = Select;
 class Group extends Component {
   constructor(props) {
