@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import "../assets/css/mian.css";
 
 import imgUrl from "../assets/img/logo120.png";
-
 class DemoItem extends Component {
   constructor(props) {
     super(props);
@@ -53,9 +52,9 @@ class DemoItem extends Component {
         >
           文件管理Demo
         </Button>
-        {/* <Button onClick={(event)=>this.goToDemo(event,'message')} className="login-btn" type="primary">
+        <Button onClick={(event)=>this.goToDemo(event,'conference')} className="login-btn" type="primary">
                     会议Demo
-                </Button> */}
+                </Button>
       </div>
     );
   }

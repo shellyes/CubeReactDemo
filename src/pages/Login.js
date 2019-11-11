@@ -7,14 +7,14 @@ import api from '../api/index';
 import  '../assets/css/mian.css';
 
 import imgUrl from '../assets/img/logo120.png'
-
+let appInfo = require(`${__dirname}/../../appInfo`);
 
 class UserList extends Component {
     constructor(props) {
         super(props);
         this.state ={
-            appId: localStorage.getItem("appId")?localStorage.getItem("appId"):'9c2ed36ae5d34131b3768ea432da6cea005',
-            appKey: localStorage.getItem("appKey")?localStorage.getItem("appKey"):'5df6d5495fb74b35ad157c94977527ff005'
+            appId: appInfo.appId,
+            appKey: appInfo.appKey
         };
     }
 

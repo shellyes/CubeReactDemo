@@ -13,7 +13,7 @@ import Group from './pages/Group';
 import Call from './pages/Call';
 import Whiteboard from './pages/Whiteboard';
 import File from './pages/File';
-
+import Conference  from "./pages/Conference";
 class AppRoot extends Component {
     constructor(props) {
         super(props);
@@ -41,7 +41,7 @@ class AppRoot extends Component {
                 <Route path="/call" component={Call} />
                 <Route path="/whiteboard" component={Whiteboard} />
                 <Route path="/file" component={File} />
-                
+                <Route path="/conference" component={Conference} />
             </div>
         );
     }

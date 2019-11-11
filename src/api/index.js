@@ -1,7 +1,7 @@
 import axios from 'axios'
 import user from './user.js'
 //记得改上传图片路劲
-var baseURL = 'https://test-user.shixincube.cn/';
+var baseURL = 'https://test-user.shixincube.cn';
 // var baseURL = window.loginServer;
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

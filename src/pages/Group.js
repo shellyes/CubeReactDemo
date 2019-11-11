@@ -6,13 +6,14 @@ import '../assets/css/mian.css';
 
 import { AppGroupListener } from "../listener/AppGroupListener";
 import { AppAccountListener } from "../listener/AppAccountListener";
+let appInfo = require(`${__dirname}/../../appInfo`);
 const { Option } = Select;
 class Group extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appId: localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005',
-      appKey: localStorage.getItem("appKey") ? localStorage.getItem("appKey") : '5df6d5495fb74b35ad157c94977527ff005',
+      appId: appInfo.appId,
+      appKey: appInfo.appKey,
       loginStatus: '请先登录',
       accountInfo: [],
       centerDialogVisible: false,
@@ -29,8 +30,19 @@ class Group extends Component {
       members: [],
       displayName: "",
       groupList: [],
-      group: {}
+      group: {},
+      addMembers: "",
+      dialogAddMenbers: false,
+      groupId: "",
+      dialogGroupMenbers: false,
+      groupMenbers: []
     }
+  }
+  messageSuccess(des){
+    message.success(des)
+  }
+  messageErro(des){
+    message.error(des)
   }
   create() {
     var self = this;
@@ -184,7 +196,11 @@ class Group extends Component {
   }
   //取消创建
   onCancelCreate() {
-    this.setState({ "dialogFormVisible": false })
+    this.setState({
+      "dialogFormVisible": false,
+      "dialogGroupMenbers": false,
+      "dialogAddMenbers": false
+    })
 
   }
   //设置群名
@@ -194,6 +210,52 @@ class Group extends Component {
   //设置群成员
   onChangeMembers(event) {
     this.setState({ "members": event.target.value })
+  }
+  //设置新增群成员
+  changeAddMenbers(event) {
+    this.setState({ "addMembers": event.target.value })
+  }
+  handleGroupMenbers(info) {
+    this.setState({
+      "groupMenbers": info.members,
+      "groupId": info.name,
+      "dialogGroupMenbers": true
+    })
+  }
+  //删除群成员
+  handleGroupMenbersDelete(info) {
+    console.log(this.state.groupId, info)
+    var groupService = window.cube.getGroupService();
+    var ret = groupService.removeMembers(this.state.groupId, [info]);
+    if (ret) {
+      message.success("删除成员成功!");
+      this.setState({ "dialogGroupMenbers": false })
+    }
+  }
+  addMenbersVisible(info) {
+    this.setState({
+      "groupId": info.name,
+      "dialogAddMenbers": true
+    })
+  }
+  //添加群成员
+  handleAddMenbers() {
+    var self = this;
+    console.log(self.state.groupId, self.state.addMembers);
+    if (self.state.addMembers.length == 0) {
+      message.error("请输入群成员");
+      return false;
+    }
+    //获取Cube群组服务
+    var groupService = cube.getGroupService();
+    var ret = groupService.addMembers(
+      self.state.groupId,
+      self.state.addMembers.split(",")
+    );
+    if (ret) {
+      this.setState({ "dialogAddMenbers": false })
+      message.success("添加成功");
+    }
   }
   //启动时调用的生命周期
   componentWillMount() {
@@ -210,7 +272,7 @@ class Group extends Component {
       })
     ) {
       console.log("引擎启动中....");
-      let appId = localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005'
+      let appId = appInfo.appId
       cube.configure({
         appid: appId,
         licenseServer: this.state.licenseServer
@@ -222,6 +284,7 @@ class Group extends Component {
   }
 
   render() {
+    var self = this;
     if (this.state.isEngineLogin == 'success') {
       this.state.loginStatus = '登录成功';
       this.state.isLogin = true;
@@ -275,11 +338,12 @@ class Group extends Component {
           <div className="whiteboard-list mt10">
             <div className="whiteboard-box">
               {
-                this.state.groupList.map((item) => {
-                  return <div className="groupItem flex felx-pac bb ptb10 mb10">
-                    <div className="flex felx-f1">
+                this.state.groupList.map((item, index) => {
+                  return <div key={index} className="groupItem flex felx-pac bb ptb10 mb10">
+                    <div className="flex felx-f1 pointer" onClick={(event) => { this.handleGroupMenbers(item) }}>
                       群名称:{item.displayName}
                     </div>
+                    <Button type="primary" onClick={(event) => this.addMenbersVisible(item)}>添加群成员</Button>
                     <Button type="danger" onClick={(event) => this.handleDelete(item)}>删除</Button>
                   </div>
                 })
@@ -298,6 +362,33 @@ class Group extends Component {
                   <div className="mr10">群成员:</div>
                   <Input className="flex-f1" placeholder="输入成员Cube号码, 用','号分开" value={this.state.members} onChange={(event) => this.onChangeMembers(event)}></Input>
                 </div>
+              </Modal>
+              <Modal
+                title="添加群成员"
+                visible={this.state.dialogAddMenbers}
+                onOk={(event) => this.handleAddMenbers()}
+                onCancel={(event) => this.onCancelCreate()}
+              >
+                <div className="flex flex-pac">
+                  <div className="mr10">群成员:</div>
+                  <Input className="flex-f1" placeholder="输入成员Cube号码, 用','号分开" value={this.state.addMembers} onChange={(event) => this.changeAddMenbers(event)}></Input>
+                </div>
+              </Modal>
+              <Modal
+                title="群成员"
+                visible={this.state.dialogGroupMenbers}
+                onCancel={(event) => this.onCancelCreate()}
+              >
+                {
+                  this.state.groupMenbers.map((item, index) => {
+                    return <div key={index} className="groupItem flex felx-pac bb ptb10 mb10">
+                      <div className="flex felx-f1">
+                        群成员:{item}
+                      </div>
+                      <Button type="danger" onClick={(event) => this.handleGroupMenbersDelete(item)}>删除</Button>
+                    </div>
+                  })
+                }
               </Modal>
             </div>
           </div>

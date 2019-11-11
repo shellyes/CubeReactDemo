@@ -7,15 +7,15 @@ import '../assets/css/mian.css';
 import * as CubeWhiteboard from "cube/CubeWhiteboard";
 import { AppAccountListener } from "../listener/AppAccountListener";
 import { AppWhiteboardListener } from "../listener/AppWhiteboardListener";
-
+let appInfo = require(`${__dirname}/../../appInfo`);
 const { Option } = Select;
 
 class Whiteboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            appId: localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005',
-            appKey: localStorage.getItem("appKey") ? localStorage.getItem("appKey") : '5df6d5495fb74b35ad157c94977527ff005',
+            appId: appInfo.appId,
+            appKey: appInfo.appKey,
             loginStatus: '请先登录',
             accountInfo: [],
             centerDialogVisible: false,
@@ -52,6 +52,12 @@ class Whiteboard extends Component {
             activeSn: ''
         }
     }
+    messageSuccess(des){
+        message.success(des)
+      }
+      messageErro(des){
+        message.error(des)
+      }
     onChange(value) {
         this.setState({ 'cubeId': value })
     }
@@ -542,7 +548,7 @@ class Whiteboard extends Component {
         this.getAccount(this.state.appKey, this.state.appId)
     }
     //调用Dom
-    componentDidUpdate() {
+    componentDidMount() {
         if (this.state.isEngineLogin == '') {
             if (
                 cube.startup(err => {
@@ -557,7 +563,7 @@ class Whiteboard extends Component {
                 })
             ) {
                 console.log("引擎启动中....");
-                let appId = localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005'
+                let appId = appInfo.appId
                 cube.configure({
                     appid: appId,
                     licenseServer: this.state.licenseServer

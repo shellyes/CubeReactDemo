@@ -6566,13 +6566,13 @@ __webpack_require__(196);
               // }
               var self = this;
               var socket = null;
-
+              //
               if (self.secure) {
                 socket = new WebSocket("wss://" + "test-license.shixincube.cn" + ":" + 7443 + "/wss", "cell");
               } else {
                 socket = new WebSocket("wss://" + "test-license.shixincube.cn" + ":" + 7443 + "/wss", "cell");
               }
-
+              
               // if (self.secure) {
               //   if (port) {
               //     socket = new WebSocket("wss://" + address + ":" + port + "/wss/", "cell");
@@ -14594,13 +14594,15 @@ __webpack_require__(200);
     }, {
       key: "loadConference",
       value: function loadConference(worker, localVideo, remoteVideo, bellAudio, localCanvas) {
-        var ret = this.loadService('Conference',worker ||  window.CubeSIPWorker.Conference.ServiceWorker);
+        var ret = this.loadService('Conference', worker || window.CubeConferenceServiceWorker);
 
         if (ret) {
           this.sipService = new window.CubeSIPWorker.ServiceWorker();
+          this.erizoService = new window.CubeErizoWorker.ServiceWorker(this);
           this.sipService.start(this, document.getElementById(localVideo), document.getElementById(remoteVideo), bellAudio !== undefined ? document.getElementById(bellAudio) : null); // 创建媒体控制器
 
           this.sipMediaService = new window.CubeSignaling.MediaServiceWorker(this.sipService, localCanvas);
+          this.erizoMediaService = new window.CubeSignaling.MediaServiceWorker(this.erizoService, localCanvas);
         }
 
         return ret;
@@ -14615,7 +14617,7 @@ __webpack_require__(200);
 
     }, {
       key: "loadWhiteboard",
-      value: function loadWhiteboard(worker,domId, name) {
+      value: function loadWhiteboard(worker, domId, name) {
         return this.loadService('Whiteboard', worker || window.CubeWhiteboard.ServiceWorker, domId, name);
       }
       /**
@@ -14692,6 +14694,10 @@ __webpack_require__(200);
     }, {
       key: "getMediaService",
       value: function getMediaService() {
+        if (this.getConferenceService()&&this.getConferenceService().isSFUConference()) {
+          return this.erizoMediaService;
+        }
+
         if (null != this.session.callPeer) {
           if (this.session.callPeer.type == 'conference' && null != this.sipService) {
             return this.sipMediaService;

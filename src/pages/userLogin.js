@@ -32,7 +32,12 @@ class UserLogin extends Component {
       errorInfo: '',
     }
   }
-
+  messageSuccess(des){
+    message.success(des)
+  }
+  messageErro(des){
+    message.error(des)
+  }
   onChange(value) {
     this.setState({ 'cubeId': value })
   }

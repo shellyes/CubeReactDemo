@@ -8,6 +8,7 @@ import * as CubeSignaling from "cube/CubeSignaling";
 import { AppAccountListener } from "../listener/AppAccountListener";
 import { AppCallListener } from "../listener/AppCallListener";
 import { MediaProbe } from "../listener/MediaProbe";
+let appInfo = require(`${__dirname}/../../appInfo`);
 const MyIcon = Icon.createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_1386319_6vfypzbgm6s.js', // 在 iconfont.cn 上生成
 });
@@ -16,8 +17,8 @@ class Call extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            appId: localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005',
-            appKey: localStorage.getItem("appKey") ? localStorage.getItem("appKey") : '5df6d5495fb74b35ad157c94977527ff005',
+            appId: appInfo.appId,
+            appKey: appInfo.appKey,
             loginStatus: '请先登录',
             accountInfo: [],
             centerDialogVisible: false,
@@ -50,6 +51,12 @@ class Call extends Component {
 
         }
     }
+    messageSuccess(des){
+        message.success(des)
+      }
+      messageErro(des){
+        message.error(des)
+      }
     onChange(value) {
         this.setState({ 'cubeId': value })
     }
@@ -384,11 +391,10 @@ class Call extends Component {
 
     //启动时调用的生命周期
     componentWillMount() {
-        console.log('123')
         this.getAccount(this.state.appKey, this.state.appId)
     }
     //调用Dom
-    componentDidUpdate() {
+    componentDidMount() {
         if (this.state.isEngineLogin == "") {
             if (
                 cube.startup(err => {
@@ -413,7 +419,7 @@ class Call extends Component {
                 })
             ) {
                 console.log("引擎启动中....");
-                let appId = localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005'
+                let appId = appInfo.appId
                 cube.configure({
                     appid: appId,
                     licenseServer: this.state.licenseServer

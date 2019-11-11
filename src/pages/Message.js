@@ -15,8 +15,8 @@ import * as CubeFile from "cube/CubeFile";
 import * as CubeMessage from "cube/CubeMessage";
 
 import { CubeFileStatusListener } from "../listener/CubeFileStatusListener";
+let appInfo = require(`${__dirname}/../../appInfo`);
 
-console.log('123456', CubeFile)
 var CubeFileInfo = CubeFile.Info;
 var CubeImageMessage = CubeMessage.Entity.Image;
 window.CubeCore = CubeCore;
@@ -25,8 +25,8 @@ class Message extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appId: localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005',
-      appKey: localStorage.getItem("appKey") ? localStorage.getItem("appKey") : '5df6d5495fb74b35ad157c94977527ff005',
+      appId: appInfo.appId,
+      appKey: appInfo.appKey,
       loginStatus: '请先登录',
       accountInfo: [],
       centerDialogVisible: false,
@@ -41,7 +41,12 @@ class Message extends Component {
       messageContent: ''
     }
   }
-
+  messageSuccess(des){
+    message.success(des)
+  }
+  messageErro(des){
+    message.error(des)
+  }
   onChange(value) {
     this.setState({ 'cubeId': value })
   }
@@ -226,7 +231,7 @@ class Message extends Component {
       })
     ) {
       console.log("引擎启动中....");
-      let appId = localStorage.getItem("appId") ? localStorage.getItem("appId") : '9c2ed36ae5d34131b3768ea432da6cea005'
+      let appId = appInfo.appId
       cube.configure({
         appid: appId,
         licenseServer: this.state.licenseServer

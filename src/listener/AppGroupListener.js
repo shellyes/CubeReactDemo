@@ -1,3 +1,4 @@
+import { CubeFileStatusListener } from "./CubeFileStatusListener";
 
 /*
  * 实现注册监听器。
@@ -17,7 +18,8 @@ export class AppGroupListener{
         var param = {
             founder:groupContext.data.founder,
             displayName:groupContext.data.displayName,
-            name:groupContext.data.name
+            name:groupContext.data.name,
+            members:groupContext.data.members,
           }
               this.react.state.groupList.push(param);
               this.react.setState({
@@ -52,7 +54,15 @@ export class AppGroupListener{
      */
     onMemberAdded(groupContext, members, addedMembers) { 
         console.log('当自己所在的群组有新增成员时被调用。',groupContext, members, addedMembers)
-
+        var groupList = this.react.state.groupList;
+        for(var i=0; i< groupList.length;i++){
+            if(groupList[i].name == groupContext.data.name){
+                groupList[i].members = members;
+            }
+        }
+        this.react.setState({
+            "groupList": groupList
+        })
     }
 
     /**
@@ -64,7 +74,18 @@ export class AppGroupListener{
      */
     onMemberRemoved(groupContext, members, removedMembers) {
         console.log('当自己所在的群组被删除时被调用。',groupContext, members, removedMembers)
-        
+        var groupList = this.react.state.groupList;
+        for(var i=0; i< groupList.length;i++){
+            if(groupList[i].name == groupContext.data.name){
+                groupList[i].members = members;
+                if(removedMembers[0] == this.react.state.cubeId){
+                    groupList.splice(i,1)
+                }
+            }
+        }
+        this.react.setState({
+            "groupList": groupList
+        })
      }
 
     /**

@@ -71,6 +71,56 @@
   .mb30 {
     margin-bottom: 30px;
   }
+  .Conference{
+    margin: 80px auto;
+    overflow-x: hidden
+  }
+  .local_fs{
+    position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 280px;
+  }
+  .remote_fs{
+      width: 80%;
+  }
+  .member-group {
+    width: 240px;
+    height: 180px;
+    float: left;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+}
+.member-group>span{
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    line-height: 20px;
+    color: white;
+    background: black;
+}
+.member-group>div{
+    width: 100%;
+    height: 100%;
+}
+  .conferenceStreamList{
+    width: 100%;
+    min-height:600px ;
+    background-color: #444444;
+    position: relative;
+  }
+  .conference_label{
+    width: 100px;
+    text-align: right;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding-right: 5px;
+  }
+  .conference_item{
+    width: calc(100% - 100px);
+    margin-bottom: 10px;
+  }
 .ly-wrapper{
     max-width: 1100px;
     margin: 80px auto;
@@ -465,6 +515,10 @@
   border-radius: 3px;
   font-size: 16px;
   cursor: pointer;
+}
+.pointer{
+  cursor: pointer;
+
 }
 .deleteIcon {
   display: inline-block;
